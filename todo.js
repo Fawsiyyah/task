@@ -153,7 +153,7 @@ let todoItems = [];
 function renderTodo(todo) {
   localStorage.setItem('todoItems', JSON.stringify(todoItems));
 
-  const list = document.querySelector('.js-todo-list');
+  const list = document.querySelector('.jstodolist');
   const item = document.querySelector(`[data-key='${todo.id}']`);
   
   if (todo.deleted) {
@@ -164,7 +164,7 @@ function renderTodo(todo) {
 
   const isChecked = todo.checked ? 'done': '';
   const node = document.createElement("li");
-  node.setAttribute('class', `todo-item ${isChecked}`);
+  node.setAttribute('class', `todoitem ${isChecked}`);
   node.setAttribute('data-key', todo.id);
   node.innerHTML = `
     <input id="${todo.id}" type="checkbox"/>
@@ -208,7 +208,7 @@ function deleteTodo(key) {
   renderTodo(todo);
 }
 
-const form = document.querySelector('.js-form');
+const form = document.querySelector('.jsform');
 form.addEventListener('submit', event => {
   event.preventDefault();
   const input = document.querySelector('.js-todo-input');
@@ -221,7 +221,7 @@ form.addEventListener('submit', event => {
   }
 });
 
-const list = document.querySelector('.js-todo-list');
+const list = document.querySelector('.jstodolist');
 list.addEventListener('click', event => {
   if (event.target.classList.contains('js-tick')) {
     const itemKey = event.target.parentElement.dataset.key;
