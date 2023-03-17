@@ -188,8 +188,7 @@ function addTodo(text) {
     checked: false,
     id: Date.now(),
   };
-
-  todoItems.push(todo);
+  todoItems.unshift(todo);
   renderTodo(todo);
 }
 
