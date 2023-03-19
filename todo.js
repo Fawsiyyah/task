@@ -1,86 +1,110 @@
 let todoItems = [];
+const testButton = document.getElementById("test")
 
-function renderTodo(todo) {
-  localStorage.setItem('todoItems', JSON.stringify(todoItems));
-
-  const list = document.querySelector('.js-todo-list');
-  const item = document.querySelector(`[data-key='${todo.id}']`);
+testButton.addEventListener("click", () => {
+  if (document.getElementById('todo-text').value !== ""){
+    addTodo()
+    renderTodo()
+  }
   
-  if (todo.deleted) {
-    item.remove();
-    if (todoItems.length === 0) list.innerHTML = '';
-    return
-  }
+})
 
-  const isChecked = todo.checked ? 'done': '';
-  const node = document.createElement("li");
-  node.setAttribute('class', `todo-item ${isChecked}`);
-  node.setAttribute('data-key', todo.id);
-  node.innerHTML = `
-    <input id="${todo.id}" type="checkbox"/>
-    <label for="${todo.id}" class="tick js-tick"></label>
-    <span>${todo.text}</span>
-    <button class="delete-todo js-delete-todo">
-    <svg><use href="#delete-icon"></use></svg>
-    </button>
-  `;
 
-  if (item) {
-    list.replaceChild(node, item);
-  } else {
-    list.append(node);
-  }
+const testContainer = document.getElementById("list-container")
+
+
+function renderTodo() {
+ 
+  // console.log(array);
+  const storage = JSON.parse(localStorage.getItem('todoItems'))
+  array = storage
+  console.log('i work');
+  const list = document.querySelector('.js-todo-list');
+  let output = ""
+  array.forEach(element => {
+    output += `
+    <li class="todo-js-item" id="${element.id}">
+      
+      <span>${element.text}</span>
+      <button class="delete-todo js-delete-todo">
+      <svg><use href="#delete-icon"></use></svg>
+      </button>
+    </li>
+    `
+  })
+  testContainer.innerHTML= output 
 }
+renderTodo()
 
-function addTodo(text) {
+function addTodo() {
   const todo = {
-    text,
+    text: `${document.getElementById('todo-text').value}`,
     checked: false,
     id: Date.now(),
-  };
-  todoItems.unshift(todo);
-  renderTodo(todo);
-}
-
-function toggleDone(key) {
-  const index = todoItems.findIndex(item => item.id === Number(key));
-  todoItems[index].checked = !todoItems[index].checked;
-  renderTodo(todoItems[index]);
-}
-
-function deleteTodo(key) {
-  const index = todoItems.findIndex(item => item.id === Number(key));
-  const todo = {
-    deleted: true,
-    ...todoItems[index]
-  };
-  todoItems = todoItems.filter(item => item.id !== Number(key));
-  renderTodo(todo);
-}
-
-const form = document.querySelector('.todo-form');
-form.addEventListener('submit', event => {
-  event.preventDefault();
-  const input = document.querySelector('.todo-input');
-
-  const text = input.value.trim();
-  if (text !== '') {
-    addTodo(text);
-    input.value = '';
-    input.focus();
   }
-});
+  document.getElementById('todo-text').value = ""
+  todoItems.unshift(todo);
+  localStorage.setItem('todoItems', JSON.stringify(todoItems));
+
+  return todoItems;
+}
+
+function deleteTodo(itemKey) {
+  const storage = JSON.parse(localStorage.getItem('todoItems'))
+  todoItems = storage
+  todoItems.forEach(element=>{
+  
+   if (element.id.toString() === itemKey){
+    element.checked = true
+   }
+  }) 
+  const filteredStorage = todoItems.filter(element => element.checked !== true)
+  todoItems = filteredStorage
+  localStorage.setItem('todoItems', JSON.stringify(todoItems));
+  renderTodo()
+}
+
+
+// function toggleDone(itemKey) {
+//   const storage = JSON.parse(localStorage.getItem('todoItems'))
+//   todoItems = storage
+//   todoItems.forEach(element=>{
+//    if (element.id.toString() === itemKey && element.checked === false){
+//     element.checked = true
+//    }
+//    if (element.id.toString() === itemKey && element.checked === true){
+//     element.checked = false
+//    }
+//   }) 
+//   localStorage.setItem('todoItems', JSON.stringify(todoItems));
+// }
+
+
+
+// const form = document.querySelector('.todo-form');
+// form.addEventListener('submit', event => {
+//   event.preventDefault();
+//   const input = document.querySelector('.todo-input');
+
+//   const text = input.value.trim();
+//   if (text !== '') {
+//     addTodo(text);
+//     input.value = '';
+//     input.focus();
+//   }
+// });
 
 const list = document.querySelector('.js-todo-list');
 list.addEventListener('click', event => {
-  if (event.target.classList.contains('js-tick')) {
-    const itemKey = event.target.parentElement.dataset.key;
-    toggleDone(itemKey);
-  }
+  // if (event.target.id= 'check-todo') {
+  //   const itemKey = event.target.parentElement.id;
+  //   toggleDone(itemKey);
+  // }
   
   if (event.target.classList.contains('js-delete-todo')) {
-    const itemKey = event.target.parentElement.dataset.key;
+    const itemKey = event.target.parentElement.id;
     deleteTodo(itemKey);
+    //console.log(itemKey);
   }
 });
 
