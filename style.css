@@ -3,6 +3,10 @@
     margin: 0;
     padding: 0;
   }
+
+  main {
+    background-color: blueviolet;
+  }
   
   .container {
     width: 100%;
@@ -11,7 +15,7 @@
     margin-top: 5vh;
     margin-bottom: 5vh;
     padding: 10px;
-    color: #642bf4;
+    color: black;
     height: 90vh;
     
   }
@@ -77,13 +81,23 @@
     display: inline;
   } */
 
+  li {
+   
+    border-radius: 6px;
+    padding: 5px;
+    color: black;
+    
+  }
+
   .todo-js-item  {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    
   }
   
   .delete-todo {
+    margin-left: 10px;
     border: none;
     background-color: transparent;
     outline: none;
@@ -91,7 +105,7 @@
   }
   
   .delete-todo svg {
-    width: 30px;
+    width: 15px;
     height: 30px;
     pointer-events: none;
   }
@@ -100,17 +114,23 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+   
   }
   
   input[type="text"] {
-    width: 100%;
+    width: 80%;
     padding: 10px;
-    border-radius: 4px;
-    border: 3px solid #333;
+    border-radius: 25px;
+  }
+
+  #test {
+    border-radius: 15px;
+    padding: 5px;
+    background: #642bf4;
   }
     
-  .checklist-icon {
+  /* .checklist-icon {
     margin-bottom: 20px;
-  }
+  } */
   
   
